@@ -18,10 +18,16 @@ async function fetchCoordinates(city) {
     try {
         const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${city}&format=json&addressdetails=1&limit=1`);
         const coordinatesDetails = await response.json();
-
-        coordinatesDetails.forEach(element => {
-            creationCoordinates(element);
-        });
+        if (coordinatesDetails.length !==0){
+            coordinatesDetails.forEach(element => {
+                creationCoordinates(element);
+                displayCityName.innerText = cityName;
+            });
+        } else {
+            displayCityName.innerText = "Ville non trouvée";
+            displayDetails.innerText = "Vérifier le nom de la ville";
+        }
+        
     } catch (error) {
         console.error("Erreur de récupération des coordonnées:", error);
     }
@@ -45,6 +51,5 @@ async function fetchWeather(latitude, longitude) {
 
 addCityName.addEventListener("click", () => {
     const cityName = document.querySelector("#cityInput").value;
-    displayCityName.innerText = cityName;
     fetchCoordinates(cityName);
 })
