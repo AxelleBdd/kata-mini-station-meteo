@@ -59,7 +59,7 @@ body {
     margin-bottom: 12px;
 }
 
-#temperature {
+#temperature, #humidity, #precipitation {
     font-size: 48px;
     font-weight: bold;
     color: #2c3e50;
@@ -72,9 +72,10 @@ body {
     color: #7f8c8d;
 }
 
-#details {
-    margin-top: 20px;
+#details, #precipitationDetails, #humidityDetails {
+    margin-top: 10px;
     color: #7f8c8d;
+    margin-bottom: 20px;
 }
 
 .loading {

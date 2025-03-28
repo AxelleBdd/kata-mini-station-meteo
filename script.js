@@ -3,6 +3,10 @@ const addCityName = document.querySelector("button");
 const displayCityName = document.querySelector("#city");
 const displayTemperature = document.querySelector("#temperature");
 const displayDetails = document.querySelector("#details");
+const displayPrecipitation = document.querySelector("#precipitation");
+const precipitationDetails = document.querySelector("#precipitationDetails");
+const displayHumidity = document.querySelector("#humidity");
+const humidityDetails = document.querySelector("#humidityDetails");
 
 function creationCoordinates(elem) {
     let coordinates = document.createElement("p");
@@ -12,6 +16,8 @@ function creationCoordinates(elem) {
     fetchWeather(latitude, longitude);
     gpsData.appendChild(coordinates);
     displayDetails.innerText = "Température actuelle";
+    precipitationDetails.innerText = "Précipitations actuelles";
+    humidityDetails.innerText = "Humidité actuelle";
 }
 
 async function fetchCoordinates(city) {
@@ -21,7 +27,7 @@ async function fetchCoordinates(city) {
         if (coordinatesDetails.length !==0){
             coordinatesDetails.forEach(element => {
                 creationCoordinates(element);
-                displayCityName.innerText = cityName;
+                displayCityName.innerText = city;
             });
         } else {
             displayCityName.innerText = "Ville non trouvée";
@@ -40,8 +46,14 @@ async function fetchWeather(latitude, longitude) {
 
         const detailsCurrent = weatherDetails.current;
         const temperature = detailsCurrent.temperature_2m;
+        const precipitation = detailsCurrent.precipitation;
+        const  humidity = detailsCurrent.relative_humidity_2m;
 
         displayTemperature.innerText = `${temperature} °C`;
+
+        displayPrecipitation.innerText = `${precipitation} mm`;
+
+        displayHumidity.innerText = `${humidity} %`;
 
 
     } catch (error) {
@@ -50,6 +62,7 @@ async function fetchWeather(latitude, longitude) {
 }
 
 addCityName.addEventListener("click", () => {
+    gpsData.innerHTML = "";
     const cityName = document.querySelector("#cityInput").value;
     fetchCoordinates(cityName);
 })
